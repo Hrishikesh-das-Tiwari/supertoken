@@ -4,6 +4,7 @@ export interface AuthConfig {
     framework: TypeFramework;
     supertokens: {
         connectionURI: string;
+        apiKey: string;
     };
     appInfo: {
         appName: string;
