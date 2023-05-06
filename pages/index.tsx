@@ -31,7 +31,7 @@ function ProtectedPage() {
 
   useEffect(() => {
     fetchWorkspace();
-  },[]);
+  }, []);
 
   async function logoutClicked() {
     await SessionReact.signOut();
