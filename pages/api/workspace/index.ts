@@ -11,6 +11,8 @@ supertokens.init(backendConfig());
 
 export default async function handler(req: SessionRequest, res: any) {
   const { method } = req;
+  console.log("reached 1");
+
   try {
     await superTokensNextWrapper(
       async (next) => {
@@ -23,32 +25,39 @@ export default async function handler(req: SessionRequest, res: any) {
     return res.status(401).json({ error });
   }
 
-  await dbConnect();
+  dbConnect().then(async () => {
+    console.log("reached 2");
 
-  const userId = req.session!.getUserId();
+    const userId = req.session!.getUserId();
 
-  switch (method) {
-    case "GET":
-      try {
-        const myWorkspace = await Workspace.find({ userId });
-        return res.status(200).json({ success: true, myWorkspace });
-      } catch (error) {
-        return res.status(400).json({ success: false });
-      }
-      break;
-    case "POST":
-      try {
-        const name = randomWords(1)[0];
-        await Workspace.create({ userId, name });
+    switch (method) {
+      case "GET":
+        try {
+          console.log("reached 3");
+          const myWorkspace = await Workspace.find({ userId });
+          console.log("reached 4", myWorkspace);
 
-        const myWorkspace = await Workspace.find({ userId });
-        return res.status(201).json({ success: true, myWorkspace });
-      } catch (error) {
-        return res.status(400).json({ success: false });
-      }
-      break;
-    default:
-      res.status(400).json({ success: false });
-      break;
-  }
+          return res.status(200).json({ success: true, myWorkspace });
+        } catch (error) {
+          console.log("error->", error);
+
+          return res.status(400).json({ success: false });
+        }
+        break;
+      case "POST":
+        try {
+          const name = randomWords(1)[0];
+          await Workspace.create({ userId, name });
+
+          const myWorkspace = await Workspace.find({ userId });
+          return res.status(201).json({ success: true, myWorkspace });
+        } catch (error) {
+          return res.status(400).json({ success: false });
+        }
+        break;
+      default:
+        res.status(400).json({ success: false });
+        break;
+    }
+  });
 }

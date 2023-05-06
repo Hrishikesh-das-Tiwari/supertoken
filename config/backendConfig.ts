@@ -8,7 +8,6 @@ export let backendConfig = (): AuthConfig => {
   return {
     framework: "express",
     supertokens: {
-        // These are the connection details of the app you created on supertokens.com
         connectionURI:
           "https://dev-1c0a8771e8ff11edb9b8b90a35a84dea-eu-west-1.aws.supertokens.io:3570",
         apiKey: "JSYN4bLubgvKvv8CHuO9InTaWPCJH=",

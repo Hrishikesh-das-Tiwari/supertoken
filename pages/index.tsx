@@ -107,7 +107,7 @@ function ProtectedPage() {
           Your Workspace
         </div>
         <div className={styles.innerContent}>
-          {workspace!.map((space, index) => (
+          {workspace?.map((space, index) => (
             <div key={index} className={`${styles.truncate} ${styles.userId}`}>
               <div className="text-red-600 mb-2">
                 WorkspaceID : <span className="text-black">{space?._id}</span>
